@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gestión de Empleados</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="dashboard">
+
+    <h1>TECHNIVISION</h1>
+
+    <h2>Gestión de Empleados</h2>
+
+    <form id="empleadoForm">
+
+        <input
+            type="text"
+            id="nombre"
+            placeholder="Nombre del empleado"
+            required>
+
+        <input
+            type="text"
+            id="cargo"
+            placeholder="Cargo"
+            required>
+
+        <div class="botonesFormulario">
+
+    <button type="submit" id="btnGuardar">
+        Guardar
+    </button>
+
+    <button
+        type="button"
+        id="btnLimpiar"
+        onclick="limpiarFormulario()">
+
+        Limpiar
+
+    </button>
+
+</div>
+
+    </form>
+
+    <br>
+
+<h3 id="contadorEmpleados">
+    Total empleados: 0
+</h3>
+
+<input
+    type="text"
+    id="buscarEmpleado"
+    placeholder="Buscar empleado..."
+>
+
+<br><br>
+
+<p id="mensajeExito"></p>
+
+    <table id="tablaEmpleados">
+
+        <thead>
+
+            <tr>
+
+                <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Acciones</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <button onclick="location.href='dashboard.html'">
+
+        Volver al Dashboard
+
+    </button>
+
+</div>
+
+<script src="js/empleados.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TECHNIVISION</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="contenedor-dashboard">
+
+<h1>TECHNIVISION</h1>
+
+<p class="subtitulo">
+
+Sistema de Gestión Empresarial
+
+</p>
+
+<h3 id="bienvenida"></h3>
+
+<div class="cards">
+
+<div class="card" onclick="location.href='empleados.html'">
+
+<h2>Empleados</h2>
+
+<p>Administrar empleados.</p>
+
+</div>
+
+<div class="card" onclick="location.href='tareas.html'">
+
+<h2>Tareas</h2>
+
+<p>Gestionar tareas.</p>
+
+</div>
+
+<div class="card" onclick="location.href='reportes.html'">
+
+<h2>Reportes</h2>
+
+<p>Consultar estadísticas.</p>
+
+</div>
+
+<div class="card salir" onclick="cerrarSesion()">
+
+<h2>Cerrar Sesión</h2>
+
+<p>Salir del sistema.</p>
+
+</div>
+
+</div>
+
+<div class="estadisticas">
+
+<h2>Resumen</h2>
+
+<p id="totalEmpleados"></p>
+
+</div>
+
+</div>
+
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>

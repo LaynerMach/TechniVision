@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gestión de Tareas</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<h1>TECHNIVISION</h1>
+
+<h2>Gestión de Tareas</h2>
+
+<form id="tareaForm">
+
+<input
+type="text"
+id="nombreTarea"
+placeholder="Nombre de la tarea"
+required>
+
+<select id="prioridad">
+
+<option>Alta</option>
+<option>Media</option>
+<option>Baja</option>
+
+</select>
+
+<br><br>
+
+<select id="estado">
+
+<option>Pendiente</option>
+<option>En proceso</option>
+<option>Finalizada</option>
+
+</select>
+
+<br><br>
+
+<div class="botonesFormulario">
+
+<button type="submit">
+
+Guardar
+
+</button>
+
+<button
+type="button"
+onclick="limpiarFormulario()">
+
+Limpiar
+
+</button>
+
+</div>
+
+</form>
+
+<h3 id="contadorTareas">
+
+Total tareas: 0
+
+</h3>
+
+<table id="tablaTareas">
+
+<thead>
+
+<tr>
+
+<th>Tarea</th>
+<th>Prioridad</th>
+<th>Estado</th>
+<th>Acciones</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+<br>
+
+<button onclick="location.href='dashboard.html'">
+
+Volver al Dashboard
+
+</button>
+
+</div>
+
+<script src="js/tareas.js"></script>
+
+</body>
+
+</html>
