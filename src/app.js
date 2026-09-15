@@ -12,9 +12,14 @@ conectarBD();
 app.use(cors());
 app.use(express.json());
 
-// Rutas
-app.use('/api/empleados', require('./routes/empleadoRoutes'));
-app.use('/api/tareas', require('./routes/tareaRoutes'));
+
+// Importar rutas
+const empleadoRoutes = require('./routes/empleadoRoutes');
+const authRoutes = require('./routes/authRoutes'); // <--- Añadir esta línea
+
+// Usar rutas
+app.use('/api/empleados', empleadoRoutes);
+app.use('/api/auth', authRoutes); // <--- Añadir esta línea
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
