@@ -30,3 +30,5 @@ Asegúrese de contar con las siguientes herramientas instaladas en su entorno lo
    ```bash
    git clone [https://github.com/TU_USUARIO/technivision.git](https://github.com/TU_USUARIO/technivision.git)
    cd technivision
+
+   - **Autenticación:** POST `/api/auth/register` y `/api/auth/login`
