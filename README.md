@@ -16,5 +16,5 @@ Sistema web completo para la gestión de empleados, tareas y reportes en TechniV
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone <URL_DE_TU_REPOSITORIO>
+   git clone <[https://github.com/LaynerMach/TechniVision](https://github.com/LaynerMach/TechniVision)>
    cd technivision
