@@ -1,15 +1,12 @@
 const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
 
 const conectarBD = async () => {
     try {
-        const mongoServer = await MongoMemoryServer.create();
-        const uri = mongoServer.getUri();
-        
-        await mongoose.connect(uri);
-        console.log('✅ Conexión exitosa a la base de datos MongoDB (En Memoria)');
+        const urlBD = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/technivision';
+        await mongoose.connect(urlBD);
+        console.log('📦 Conexión exitosa a MongoDB (Persistente)');
     } catch (error) {
-        console.error('❌ Error de conexión a la BD:', error.message);
+        console.error('❌ Error al conectar a la base de datos:', error.message);
         process.exit(1);
     }
 };

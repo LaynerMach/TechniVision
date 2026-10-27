@@ -1,142 +1,126 @@
-let tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+const TOKEN = localStorage.getItem('token');
 
-const formulario = document.getElementById("tareaForm");
-const tabla = document.querySelector("#tablaTareas tbody");
-
-let indiceEditar = -1;
-
-mostrarTareas();
-
-formulario.addEventListener("submit",function(e){
-
-e.preventDefault();
-
-const nombre=document.getElementById("nombreTarea").value.trim();
-const prioridad=document.getElementById("prioridad").value;
-const estado=document.getElementById("estado").value;
-
-if(nombre===""){
-
-alert("Ingrese una tarea.");
-
-return;
-
+// Redirigir al login si no hay token de sesión
+if (!TOKEN) {
+  window.location.href = 'index.html';
 }
 
-if(indiceEditar==-1){
-
-tareas.push({
-
-nombre,
-prioridad,
-estado
-
+// 1. Mostrar información del usuario autenticado (si tienes un elemento con id "nombreUsuario")
+document.addEventListener('DOMContentLoaded', () => {
+  const usuarioGuardado = localStorage.getItem('usuario');
+  if (usuarioGuardado) {
+    const usuario = JSON.parse(usuarioGuardado);
+    const spanNombre = document.getElementById('nombreUsuario');
+    if (spanNombre) spanNombre.textContent = usuario.nombre;
+  }
+  obtenerTareas();
 });
 
-}else{
+// 2. Obtener y mostrar todas las tareas desde la API
+async function obtenerTareas() {
+  try {
+    const respuesta = await fetch('/api/tareas', {
+      headers: {
+        'Authorization': `Bearer ${TOKEN}`
+      }
+    });
 
-tareas[indiceEditar]={
+    // Si el token expiró o es inválido (401 / 403), redirigir al login
+    if (respuesta.status === 401 || respuesta.status === 403) {
+      cerrarSesion();
+      return;
+    }
 
-nombre,
-prioridad,
-estado
-
-};
-
-indiceEditar=-1;
-
+    const tareas = await respuesta.json();
+    if (Array.isArray(tareas)) {
+      renderizarTareas(tareas);
+    }
+  } catch (error) {
+    console.error('Error al obtener tareas:', error);
+  }
 }
 
-guardar();
+// 3. Crear una nueva tarea
+document.getElementById('formTarea')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-formulario.reset();
+  const titulo = document.getElementById('tituloTarea').value.trim();
+  const descripcion = document.getElementById('descripcionTarea').value.trim();
 
-mostrarTareas();
+  if (!titulo) return alert('El título es obligatorio');
 
+  try {
+    const respuesta = await fetch('/api/tareas', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${TOKEN}`
+      },
+      body: JSON.stringify({ titulo, descripcion })
+    });
+
+    if (respuesta.ok) {
+      document.getElementById('formTarea').reset();
+      obtenerTareas(); // Recargar la lista
+    } else {
+      const errorData = await respuesta.json();
+      alert(errorData.mensaje || 'Error al crear la tarea');
+    }
+  } catch (error) {
+    console.error('Error al crear tarea:', error);
+  }
 });
 
-function mostrarTareas(){
+// 4. Eliminar una tarea por ID
+async function eliminarTarea(id) {
+  if (!confirm('¿Seguro que deseas eliminar esta tarea?')) return;
 
-tabla.innerHTML="";
+  try {
+    const respuesta = await fetch(`/api/tareas/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${TOKEN}`
+      }
+    });
 
-tareas.forEach((tarea,index)=>{
-
-tabla.innerHTML+=`
-
-<tr>
-
-<td>${tarea.nombre}</td>
-
-<td>${tarea.prioridad}</td>
-
-<td>${tarea.estado}</td>
-
-<td>
-
-<button class="editar"
-onclick="editar(${index})">
-
-Editar
-
-</button>
-
-<button class="eliminar"
-onclick="eliminar(${index})">
-
-Eliminar
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-document.getElementById("contadorTareas").textContent=
-
-"Total tareas: "+tareas.length;
-
+    if (respuesta.ok) {
+      obtenerTareas();
+    } else {
+      alert('No se pudo eliminar la tarea');
+    }
+  } catch (error) {
+    console.error('Error al eliminar tarea:', error);
+  }
 }
 
-function guardar(){
+// 5. Renderizar las tareas en el DOM
+function renderizarTareas(tareas) {
+  const contenedor = document.getElementById('listaTareas');
+  if (!contenedor) return;
 
-localStorage.setItem("tareas",JSON.stringify(tareas));
+  contenedor.innerHTML = '';
 
+  if (tareas.length === 0) {
+    contenedor.innerHTML = '<p>No tienes tareas pendientes.</p>';
+    return;
+  }
+
+  tareas.forEach(tarea => {
+    const item = document.createElement('div');
+    item.className = 'tarea-card';
+    item.innerHTML = `
+      <h3>${tarea.titulo}</h3>
+      <p>${tarea.descripcion || 'Sin descripción'}</p>
+      <small>Estado: <strong>${tarea.estado || 'Pendiente'}</strong></small>
+      <button onclick="eliminarTarea('${tarea._id}')">Eliminar</button>
+    `;
+    contenedor.appendChild(item);
+  });
 }
 
-function eliminar(index){
-
-if(confirm("¿Eliminar tarea?")){
-
-tareas.splice(index,1);
-
-guardar();
-
-mostrarTareas();
-
-}
-
-}
-
-function editar(index){
-
-document.getElementById("nombreTarea").value=tareas[index].nombre;
-
-document.getElementById("prioridad").value=tareas[index].prioridad;
-
-document.getElementById("estado").value=tareas[index].estado;
-
-indiceEditar=index;
-
-}
-
-function limpiarFormulario(){
-
-formulario.reset();
-
-indiceEditar=-1;
-
+// 6. Función para Cerrar Sesión
+function cerrarSesion() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('usuario');
+  window.location.href = 'index.html';
 }

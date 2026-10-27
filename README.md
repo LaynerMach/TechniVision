@@ -1,34 +1,20 @@
-# TechniVision - Backend API (Node.js + Express + MongoDB)
+# TechniVision - Sistema de Gestión Integrado
 
-Servicio RESTful desarrollado en Node.js y Express para la gestión de empleados y módulos del sistema informático TechniVision. Incorpora persistencia de datos orientada a documentos utilizando MongoDB y Mongoose.
+Sistema web completo para la gestión de empleados, tareas y reportes en TechniVision, desarrollado con la arquitectura MERN.
 
----
+## Tecnologías Utilizadas
+- **Backend:** Node.js, Express.js
+- **Base de Datos:** MongoDB, Mongoose
+- **Seguridad:** JSON Web Tokens (JWT), BcryptJS
+- **Frontend:** HTML5, CSS3, JavaScript (Fetch API)
 
-## 🛠️ Tecnologías Utilizadas
+## Requisitos Previos
+- Node.js instalado (v16 o superior)
+- MongoDB Server corriendo localmente en `mongodb://127.0.0.1:27017` o cuenta en MongoDB Atlas.
 
-- **Entorno de ejecución:** Node.js (v18+)
-- **Framework Web:** Express.js (v4.x)
-- **Base de Datos:** MongoDB / MongoDB Memory Server
-- **ODM:** Mongoose (v8.x)
-- **Variables de Entorno:** Dotenv
-- **Cliente HTTP de Pruebas:** Thunder Client / Postman
-
----
-
-## 📋 Requisitos Previos
-
-Asegúrese de contar con las siguientes herramientas instaladas en su entorno local:
-
-- [Node.js](https://nodejs.org/) (Versión 18.x o superior)
-- [Git](https://git-scm.com/)
-
----
-
-## ⚙️ Instalación y Configuración
+## Pasos para Ejecutar la Aplicación
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone [https://github.com/TU_USUARIO/technivision.git](https://github.com/TU_USUARIO/technivision.git)
+   git clone <URL_DE_TU_REPOSITORIO>
    cd technivision
-
-   - **Autenticación:** POST `/api/auth/register` y `/api/auth/login`
